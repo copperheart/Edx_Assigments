@@ -1,0 +1,48 @@
+******************Html File**********************
+<div id ="root"></div> \\import this in htmlfile
+
+*****************Html File***********************
+
+*****************JS File***********************
+function ShoppingTitle(props){
+  return(
+    <div>
+      <h1>{props.title}</h1>
+      <h2> Total Number of Items: {props.numItem}</h2>
+    </div>
+  )
+}
+function ListItems(props){
+  return <li>{props.item}</li>
+}
+function ShoppingList(props){
+  return(
+    <div>
+      <h3>{props.title}</h3>
+      <ol>
+        <ListItems item = {props.items[0]}/>
+        <ListItems item = {props.items[1]}/>
+        <ListItems item = {props.items[2]}/>
+      </ol>
+    </div>
+  )
+}
+
+
+function MyShoppingList(){
+  return (
+    <div>
+      <ShoppingTitle title="My ShoppingList" numItem = {9} />
+      <ShoppingList title="Food" items={["cheese",'onion','gourd']}/>
+      <ShoppingList title="Clothes" items={["Pants",'Shirts','Socks']}/>
+      <ShoppingList title="Supplies" items={["Will",'Pill','Nill']}/>
+    </div>
+  )
+}
+
+ReactDOM.render(
+  <MyShoppingList />,
+  document.getElementById('root')
+);
+
+*****************Html File***********************
