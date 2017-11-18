@@ -1,0 +1,131 @@
+*************Html File*****************
+<div id ='root'></div>
+*************Html File*****************
+
+*************JS File*****************
+
+function ReactTransportation(props){
+  return(
+     <div>
+      <h1>{props.title}</h1>
+      <h3>{props.subtitle}</h3>
+     </div>
+  )
+}
+function ReactCheckBox(){
+  return <input type ="checkbox" />
+}
+function ReactSelectOption(props){
+  return (
+  <span>
+    <select>
+          <option value="all">{props.listitems[0]}</option>
+          <option value="car">{props.listitems[1]}</option>
+          <option value="truck">{props.listitems[2]}</option>
+          <option value="convertibles">{props.listitems[3]}</option>
+    </select>    
+  </span>  
+  )
+}
+function ReactOptions(props){
+  return(
+    <div>
+      <h2> {props.header}</h2>
+      <h4>{props.subheader1} <ReactCheckBox /> </h4>
+      <h4>{props.subheader2} <ReactSelectOption listitems = {['All','Car','Truck','Convertibles']}/> </h4>   
+    </div>
+  )
+}
+function ReactButton(props){
+  const ButtonStyle = {
+    width:'100px',
+    height: '36px',
+    textAlign: 'center',
+    borderRadius: '5px'
+  }
+  return <button style = {ButtonStyle}>{props.insidename}</button>
+}
+
+
+
+function ReactTable(props){
+     const tableStyle = {
+      border: '1px solid lightgray',
+      borderCollapse: 'collapse',
+      textAlign: 'left',
+      width: '886px',
+      height: '35px',
+      margin: '25px',
+      padding:'10px'
+  };
+  const tableHeaderStyle = {
+    backgroundColor:'#EAEAEA',
+    borderRight: '1px solid lightgray',
+    borderCollapse: 'collapse',
+    height: "25px",
+    padding:'10px'
+  };
+  return (
+    <table style={tableStyle}>
+      <tr>
+          <th  style={tableHeaderStyle}>Year</th>
+          <th  style={tableHeaderStyle} >Model</th> 
+          <th  style={tableHeaderStyle} >Price</th>
+          <th style={tableHeaderStyle} >Buy</th>
+      </tr>
+       <tr>
+          <td  style={tableStyle} >{props.year}</td>
+          <td  style={tableStyle} >{props.model}</td> 
+          <td  style={tableStyle} >{props.price}</td>
+          <td  style={tableStyle} > <ReactButton insidename = "Buy Now"/> </td>
+       </tr>     
+    </table>
+    )
+}
+function ReactTransportList(props){
+  if(props.header == "Cars"){
+     return(
+    <div>
+      <h2>{props.header}</h2>
+      <ReactTable year = {2013} model= "A" price= "$32000" />
+      <ReactTable year = {2011} model= "B" price= "$4400" />
+      <ReactTable year = {2016} model= "B" price= "$15500" />
+    </div>  
+  )
+  } else if (props.header == "Trucks"){
+         return(
+    <div>
+      <h2>{props.header}</h2>
+      <ReactTable year = {2014} model= "D" price= "$18000" />
+      <ReactTable year = {2013} model= "E" price= "$5200" />
+    </div>  
+  )
+  }else{
+      return(
+    <div>
+      <h2>{props.header}</h2>
+      <ReactTable year = {2009} model= "F" price= "$2000" />
+      <ReactTable year = {2010} model= "G" price= "$6000" />
+      <ReactTable year = {2012} model= "H" price= "$12500" />
+      <ReactTable year = {2017} model= "M" price= "$50000" />
+    </div>  
+  )
+  } 
+}
+function MyTransportationApp(){
+  return(
+    <div>
+      <ReactTransportation title="Welcome to React Transportation" subtitle="The best place to buy vehicles online" />
+      <ReactOptions header="Choose Options" subheader1="New Only" subheader2 = "Select Type" />
+      <ReactTransportList header="Cars" />
+      <ReactTransportList header="Trucks" />
+      <ReactTransportList header="Convertibles" />     
+    </div>
+  )
+}
+ReactDOM.render(
+  <MyTransportationApp />,
+  document.getElementById('root')
+);
+
+*************JS File*****************
