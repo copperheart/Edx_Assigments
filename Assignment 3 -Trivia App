@@ -1,0 +1,165 @@
+****************The Final Result************************
+https://codepen.io/alshams/pen/YEYqMR
+****************The Final Result************************
+
+****************HTML File************************
+<div id ="root"></div>
+****************HTML File************************
+
+
+****************Js File************************
+function Button(props){
+  const style = {
+    width: "250px",
+    height: "55px",
+    backgroundColor: "#4caf50", 
+    border:"none",
+    color: "white",
+    padding: "16px 32px",
+    textDecoration:"none",
+    display: "flex",
+    justifyContent:'center',
+    alignItems: 'center',
+    fontSize: "16px",
+    margin: "4px 2px",
+    cursor: "pointer"
+  }
+  return <button style={style}  onClick ={() => {props.handleClick(props.id)}} >{props.btntext}</button>
+}
+
+function ButtonStack(props){
+   const style = {
+    display:"flex",
+    flexDirection:"column"
+  }
+  return(
+  <div style = {style}>
+      <Button id = {0} btntext = {props.btntext}  handleClick = {props.handleClick}  />
+      <Button id = {1} btntext = {props.btntext1} handleClick = {props.handleClick}  />
+  </div>
+  )
+}
+
+function Result(props){
+     const style = {
+     display:"flex",
+     flexDirection: 'column',
+     width:'100%',
+     alignItems : 'center',
+     justifyContent: 'space-around',
+  }
+  return(
+    <div style = {style}>
+      <h2> Correct:   {props.correct} </h2>
+      <h2 style = {{ color: 'red'}}>InCorrect: {props.inCorrect} </h2>
+    </div>
+  )
+}
+
+
+function Body(props){
+  const style = {
+    display:'flex',
+    width:"650px",
+    margin:'auto',
+  }
+  return(
+    <div style = {style}>
+      <ButtonStack  btntext = {props.btntext} btntext1 = {props.btntext1} handleClick = {props.handleClick} />
+      <Result correct = {props.correct} inCorrect = {props.inCorrect} />   
+    </div>
+  )
+}
+
+class TriviaGame extends React.Component{
+  constructor(props){
+    super(props)
+    const trivia = 
+      [
+          { Question : "what is a React" , option1 : "A js Library" , option2 : "A js framework", answer : "A js Library" }, 
+          { Question : " is 4 > 3 = " , option1 : "no" , option2 : "yes" , answer : "yes" },
+          { Question : " Is edx great " , option1 : "yes" , option2 : "no", answer : "yes" },
+          { Question : " Is edx online " , option1 : "yes" , option2 : "no", answer : "yes" },
+          { Question : "1 + 1 = ", option1: "100", option2: "2" , answer: "2"},
+          { Question : "10 - 1 = ", option1: "9", option2: "8", answer: "9" },
+          { Question : "10 + 10 = ", option1: "1000", option2: "20", answer: "20"},
+      ]
+    this.state = {text : trivia[0].Question, btntext : trivia[0].option1, btntext1 : trivia[0].option2 , trivia : trivia, correct : 0 ,inCorrect: 0,count : 0}
+    this.handleClick=this.handleClick.bind(this)
+    this.reset=this.reset.bind(this)
+  }
+  handleClick(id)
+  {
+    const newtrivia = this.state.trivia.slice()
+    let answers = newtrivia[this.state.count].answer
+    let option1 = newtrivia[this.state.count].option1 
+    let option2 = newtrivia[this.state.count].option2 
+    if (this.state.count < newtrivia.length)
+    {
+        if(id == 0)
+        {
+            if(answers == option1)
+             {
+                  this.setState((prevState) => { return {correct:prevState.correct + 1}})
+             } else 
+             {
+                  this.setState((prevState) => { return {inCorrect:prevState.inCorrect + 1}})
+             }
+          
+        } else
+        {
+           if(answers == option2)
+             {
+               this.setState((prevState) => { return {correct:prevState.correct + 1}})
+             }else
+             {
+                 this.setState((prevState) => { return {inCorrect:prevState.inCorrect + 1}})
+             }  
+        }
+      this.setState((prevState) => { return {count:prevState.count + 1}} , () => { return this.setState( {text : newtrivia[this.state.count].Question , btntext :newtrivia[this.state.count].option1 , btntext1 : newtrivia[this.state.count].option2 })}) 
+  
+   }
+    if(this.state.count === newtrivia.length-1){
+      alert("Game Over -- Reset the game to start over!!!")
+    }
+ }
+  reset()
+  {
+    this.setState({text : this.state.trivia[0].Question, btntext : this.state.trivia[0].option1, btntext1 : this.state.trivia[0].option2 , correct : 0 ,inCorrect: 0,count : 0})
+  }
+  render(){
+    const buttonStyle = {
+    width: "250px",
+    height: "55px",
+    backgroundColor: "#008CBA", 
+    border:"none",
+    color: "white",
+    padding: "16px 32px",
+    textDecoration:"none",
+    display: "flex",
+    justifyContent:'center',
+    alignItems: 'center',
+    fontSize: "16px",
+    margin: "4px 2px",
+    cursor: "pointer"
+    }
+    return(
+      <div>
+        <h1>Total Questions Attempted : {this.state.correct} / {this.state.trivia.length} </h1>
+        <header style = {{textAlign:'center', color: 'blue'}}> <h1> {this.state.text} </h1> </header>
+        <Body btntext = {this.state.btntext} btntext1 = {this.state.btntext1} correct={this.state.correct} inCorrect = {this.state.inCorrect} handleClick = {this.handleClick} />
+        <div style = {{width: '60%',margin:"auto",display:'flex',justifyContent:'center' ,marginTop :"20px" }} >
+          <button onClick = {this.reset} style = {buttonStyle} >  Reset </button>
+      </div>
+     </div>
+    )
+  }
+}
+
+
+ReactDOM.render(
+  <TriviaGame />,
+  document.getElementById('root')
+);
+
+****************Js File************************
